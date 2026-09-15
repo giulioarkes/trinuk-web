@@ -87,7 +87,85 @@
         </nav>
     </header>
 
-    section class="hero"
+    <!-- PORTALE GENERATIVO (VIBE CODING CANVAS) -->
+    <section class="hero">
+        <canvas id="matrix-canvas"></canvas>
+        <div class="hero-content">
+            <h1 style="font-size: 4rem; letter-spacing: 12px; margin-bottom: 0.5rem; font-weight: bold;">TRINUK</h1>
+            <h2 style="font-size: 1.2rem; letter-spacing: 6px; margin-bottom: 2rem; color: #d1cbb8; font-weight: normal;">LA WUNDERKAMMER DELLA PSICHE</h2>
+            <p style="font-size: 0.95rem; line-height: 1.8; color: #9c9786; max-width: 600px; margin: 0 auto; letter-spacing: 1px;">
+                Sculture interattive e artefatti incompleti.<br>
+                Un rito materico guidato dall'intelligenza artificiale per esplorare il tuo archetipo profondo.
+            </p>
+        </div>
+    </section>
+
+    <!-- SCRIPT MATEMATICO DEL VIBE CODING -->
+    <script>
+        const canvas = document.getElementById('matrix-canvas');
+        const ctx = canvas.getContext('2d');
+
+        function resize() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        resize();
+        window.addEventListener('resize', resize);
+
+        const particles = [];
+        const numParticles = 70;
+
+        for (let i = 0; i < numParticles; i++) {
+            particles.push({
+                x: Math.random() * canvas.width,
+                y: Math.random() * canvas.height,
+                vx: (Math.random() - 0.5) * 0.6,
+                vy: (Math.random() - 0.5) * 0.6,
+                radius: Math.random() * 2 + 1,
+                alpha: Math.random() * 0.5 + 0.2
+            });
+        }
+
+        function animate() {
+            ctx.fillStyle = '#0a0a09';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            particles.forEach(p => {
+                p.x += p.vx;
+                p.y += p.vy;
+
+                if (p.x < 0 || p.x > canvas.width) p.vx *= -1;
+                if (p.y < 0 || p.y > canvas.height) p.vy *= -1;
+
+                ctx.beginPath();
+                ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+                ctx.fillStyle = `rgba(209, 203, 184, ${p.alpha})`;
+                ctx.fill();
+            });
+
+            // Connessioni di prossimità (Trama quantistica)
+            for (let i = 0; i < particles.length; i++) {
+                for (let j = i + 1; j < particles.length; j++) {
+                    const dx = particles[i].x - particles[j].x;
+                    const dy = particles[i].y - particles[j].y;
+                    const dist = Math.sqrt(dx * dx + dy * dy);
+
+                    if (dist < 120) {
+                        ctx.beginPath();
+                        ctx.moveTo(particles[i].x, particles[i].y);
+                        ctx.lineTo(particles[j].x, particles[j].y);
+                        ctx.strokeStyle = `rgba(209, 203, 184, ${0.15 * (1 - dist / 120)})`;
+                        ctx.lineWidth = 0.5;
+                        ctx.stroke();
+                    }
+                }
+            }
+
+            requestAnimationFrame(animate);
+        }
+
+        animate();
+    </script>
 
     <!-- MANIFESTO -->
     <section class="manifesto">
