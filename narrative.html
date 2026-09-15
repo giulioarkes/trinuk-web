@@ -102,6 +102,32 @@
             }
         }
 
+        /* Quando avremo le immagini vere, useremo questo tag */
+        .repertorio-visual img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: grayscale(100%) contrast(1.2) brightness(0.6);
+            transition: all 0.8s ease;
+        }
+
+        /* L'immagine prende vita (colore e luce) solo quando il mouse la sfiora */
+        .repertorio-item:hover .repertorio-visual img {
+            filter: grayscale(0%) contrast(1.1) brightness(0.9);
+            transform: scale(1.03);
+        }
+
+        @media (max-width: 900px) {
+            .repertorio-item { 
+                grid-template-columns: 1fr; 
+                gap: 2rem; 
+            }
+            .repertorio-visual {
+                height: 300px;
+                order: -1; /* Mette l'immagine sopra al testo su mobile */
+            }
+        }
+
         /* SEZIONE PROTOCOLLO D'ACCESSO */
         .protocol-section {
             max-width: 700px;
