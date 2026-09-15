@@ -34,7 +34,7 @@
         .nav-links a { color: #7a766a; text-decoration: none; font-size: 0.85rem; letter-spacing: 2px; margin-left: 3rem; text-transform: uppercase; transition: color 0.4s ease; }
         .nav-links a:hover, .nav-links a.active { color: #d1cbb8; }
 
-        /* PORTALE GENERATIVO (CENTRATURA ASSOLUTA) */
+        /* ATTO ZERO: IL PORTALE VIDEO */
         .hero { 
             position: relative; 
             height: 100vh; 
@@ -47,14 +47,18 @@
             box-sizing: border-box;
         }
 
-        #matrix-canvas {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            z-index: 0;
-            display: block;
+        .hero video { 
+            position: absolute; 
+            top: 50%; 
+            left: 50%; 
+            min-width: 100%; 
+            min-height: 100%; 
+            width: auto; 
+            height: auto; 
+            z-index: 0; 
+            transform: translateX(-50%) translateY(-50%); 
+            object-fit: cover; 
+            filter: brightness(0.35) contrast(1.2); 
         }
 
         .hero-content { 
@@ -75,7 +79,7 @@
             }
             50% { 
                 color: #fffaf0; 
-                text-shadow: 0 0 20px rgba(255, 140, 0, 0.4), 0 0 40px rgba(255, 69, 0, 0.2), 0 0 80px rgba(200, 0, 0, 0.1); 
+                text-shadow: 0 0 25px rgba(255, 140, 0, 0.4), 0 0 50px rgba(255, 69, 0, 0.2); 
             }
             100% { 
                 color: #d1cbb8; 
@@ -94,7 +98,7 @@
         .hero h2 { font-size: 1.2rem; letter-spacing: 6px; margin-bottom: 2rem; color: #d1cbb8; font-weight: normal; text-transform: uppercase; }
         .hero p { font-size: 0.95rem; line-height: 1.8; color: #9c9786; max-width: 600px; margin: 0 auto; letter-spacing: 1px; }
 
-        /* IL RESTO DEL MANIFESTO */
+        /* MANIFESTO */
         .manifesto { max-width: 700px; margin: 6rem auto; padding: 0 2rem; box-sizing: border-box; }
         .blocco-testo { margin-bottom: 5rem; text-align: center; }
         .blocco-testo h2 { font-size: 1.2rem; letter-spacing: 4px; color: #d1cbb8; margin-bottom: 2rem; text-transform: uppercase; font-weight: normal; border-bottom: 1px solid rgba(209, 203, 184, 0.2); padding-bottom: 1rem; }
@@ -109,36 +113,14 @@
         .mail-sigillo { display: inline-block; color: #d1cbb8; text-decoration: none; font-size: 0.85rem; letter-spacing: 2px; transition: opacity 0.4s ease; }
         .mail-sigillo:hover { opacity: 0.4; }
 
+        /* MOBILE */
         @media (max-width: 768px) {
-            .navbar {
-                flex-direction: column;
-                padding: 1.5rem 1rem;
-                gap: 1.5rem;
-            }
-            .nav-links {
-                display: flex;
-                gap: 1.5rem;
-                justify-content: center;
-                width: 100%;
-            }
-            .nav-links a {
-                margin-left: 0;
-                font-size: 0.75rem;
-            }
-            .hero h1 {
-                font-size: 2.5rem;
-                letter-spacing: 6px;
-            }
-            .hero h2 {
-                font-size: 0.85rem;
-                letter-spacing: 3px;
-                margin-bottom: 1.5rem;
-            }
-            .hero p {
-                font-size: 0.85rem;
-                padding: 0 1rem;
-                line-height: 1.6;
-            }
+            .navbar { flex-direction: column; padding: 1.5rem 1rem; gap: 1.5rem; }
+            .nav-links { display: flex; gap: 1.5rem; justify-content: center; width: 100%; }
+            .nav-links a { margin-left: 0; font-size: 0.75rem; }
+            .hero h1 { font-size: 2.5rem; letter-spacing: 6px; }
+            .hero h2 { font-size: 0.85rem; letter-spacing: 3px; margin-bottom: 1.5rem; }
+            .hero p { font-size: 0.85rem; padding: 0 1rem; line-height: 1.6; }
         }
     </style>
 </head>
@@ -149,13 +131,17 @@
         <a href="index.html" class="nav-brand">TRINUK</a>
         <nav class="nav-links">
             <a href="index.html" class="active">Il Manifesto</a>
+            <a href="narrative.html">Narrative</a>
             <a href="corporate.html">Corporate</a>
         </nav>
     </header>
 
-    <!-- PORTALE GENERATIVO (VIBE CODING CANVAS) -->
+    <!-- PORTALE VIDEO HERO -->
     <section class="hero">
-        <canvas id="matrix-canvas"></canvas>
+        <video autoplay muted loop playsinline>
+            <source src="trinuk-video.mp4" type="video/mp4">
+            Il tuo browser non supporta il flusso video.
+        </video>
         <div class="hero-content">
             <h1>TRINUK</h1>
             <h2>LA WUNDERKAMMER DELLA PSICHE</h2>
@@ -166,76 +152,8 @@
         </div>
     </section>
 
-    <!-- SCRIPT MATEMATICO DEL VIBE CODING -->
-    <script>
-        const canvas = document.getElementById('matrix-canvas');
-        const ctx = canvas.getContext('2d');
-
-        function resize() {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-        }
-        resize();
-        window.addEventListener('resize', resize);
-
-        const particles = [];
-        const numParticles = 70;
-
-        for (let i = 0; i < numParticles; i++) {
-            particles.push({
-                x: Math.random() * canvas.width,
-                y: Math.random() * canvas.height,
-                vx: (Math.random() - 0.5) * 0.6,
-                vy: (Math.random() - 0.5) * 0.6,
-                radius: Math.random() * 2 + 1,
-                alpha: Math.random() * 0.5 + 0.2
-            });
-        }
-
-        function animate() {
-            ctx.fillStyle = '#0a0a09';
-            ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-            particles.forEach(p => {
-                p.x += p.vx;
-                p.y += p.vy;
-
-                if (p.x < 0 || p.x > canvas.width) p.vx *= -1;
-                if (p.y < 0 || p.y > canvas.height) p.vy *= -1;
-
-                ctx.beginPath();
-                ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
-                ctx.fillStyle = `rgba(209, 203, 184, ${p.alpha})`;
-                ctx.fill();
-            });
-
-            // Connessioni di prossimità (Trama quantistica)
-            for (let i = 0; i < particles.length; i++) {
-                for (let j = i + 1; j < particles.length; j++) {
-                    const dx = particles[i].x - particles[j].x;
-                    const dy = particles[i].y - particles[j].y;
-                    const dist = Math.sqrt(dx * dx + dy * dy);
-
-                    if (dist < 120) {
-                        ctx.beginPath();
-                        ctx.moveTo(particles[i].x, particles[i].y);
-                        ctx.lineTo(particles[j].x, particles[j].y);
-                        ctx.strokeStyle = `rgba(209, 203, 184, ${0.15 * (1 - dist / 120)})`;
-                        ctx.lineWidth = 0.5;
-                        ctx.stroke();
-                    }
-                }
-            }
-
-            requestAnimationFrame(animate);
-        }
-
-        animate();
-    </script>
-
     <!-- MANIFESTO -->
     <section class="manifesto">
-        
         <div class="blocco-testo">
             <h2>L'Artefatto Incompleto</h2>
             <p>Ci opponiamo alla resa cognitiva e alla freddezza dell'arredo inerte. Un Trinuk non è un oggetto di design e non è una decorazione passiva.</p>
@@ -265,7 +183,6 @@
                 </div>
             </div>
         </div>
-        
     </section>
 
     <!-- FOOTER -->
