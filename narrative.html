@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Narrative // Trinuk — Anima Story Studio</title>
+    <style>
+        /* FONDAMENTA E GEOMETRIA DARK */
+        html, body { 
+            margin: 0; 
+            padding: 0; 
+            width: 100%;
+            background-color: #0a0a09; 
+            color: #d1cbb8; 
+            font-family: "Georgia", serif; 
+            overflow-x: hidden; 
+        }
+        
+        /* HEADER NAVBAR */
+        .navbar { 
+            position: absolute; 
+            top: 0; 
+            left: 0; 
+            width: 100%; 
+            padding: 2rem 4rem; 
+            box-sizing: border-box; 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+            z-index: 10; 
+            border-bottom: 1px solid rgba(209, 203, 184, 0.1); 
+        }
+        .nav-brand { font-size: 1.2rem; letter-spacing: 4px; color: #d1cbb8; text-decoration: none; text-transform: uppercase; }
+        .nav-links a { color: #7a766a; text-decoration: none; font-size: 0.85rem; letter-spacing: 2px; margin-left: 3rem; text-transform: uppercase; transition: color 0.4s ease; }
+        .nav-links a:hover, .nav-links a.active { color: #d1cbb8; }
+
+        /* HEADER DELLA STANZA */
+        .room-header {
+            padding: 12rem 2rem 6rem 2rem;
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .room-header h1 {
+            font-size: 2.5rem;
+            letter-spacing: 8px;
+            text-transform: uppercase;
+            font-weight: normal;
+            margin-bottom: 1.5rem;
+            color: #d1cbb8;
+        }
+        .room-header p {
+            font-size: 0.95rem;
+            line-height: 1.9;
+            color: #8c8675;
+            letter-spacing: 1px;
+        }
+
+        /* ARCHIVIO REPERTI (GRIGLIA ONTOLOGICA) */
+        .archive-container {
+            max-width: 1000px;
+            margin: 0 auto 8rem auto;
+            padding: 0 2rem;
+            box-sizing: border-box;
+        }
+
+        .repertorio-item {
+            border-top: 1px solid rgba(209, 203, 184, 0.15);
+            padding: 4rem 0;
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 4rem;
+            align-items: start;
+        }
+
+        .repertorio-meta h3 {
+            font-size: 1.1rem;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: #d1cbb8;
+            margin-top: 0;
+            margin-bottom: 1rem;
+            font-weight: normal;
+        }
+
+        .repertorio-status {
+            font-size: 0.75rem;
+            letter-spacing: 3px;
+            color: #7a766a;
+            text-transform: uppercase;
+            display: inline-block;
+            padding: 0.3rem 0.6rem;
+            border: 1px solid rgba(122, 118, 106, 0.3);
+        }
+
+        .repertorio-body p {
+            font-size: 0.95rem;
+            line-height: 1.9;
+            color: #8c8675;
+            margin-top: 0;
+            margin-bottom: 2rem;
+            text-align: justify;
+        }
+
+        .materia-specs {
+            font-size: 0.85rem;
+            letter-spacing: 1px;
+            color: #615d52;
+            border-left: 1px solid #423f37;
+            padding-left: 1rem;
+        }
+
+        /* SEZIONE PROTOCOLLO D'ACCESSO */
+        .protocol-section {
+            max-width: 700px;
+            margin: 0 auto 10rem auto;
+            padding: 4rem 2rem;
+            text-align: center;
+            border: 1px solid rgba(209, 203, 184, 0.1);
+            background: rgba(20, 20, 18, 0.5);
+            box-sizing: border-box;
+        }
+
+        .protocol-section h2 {
+            font-size: 1.1rem;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            color: #d1cbb8;
+            margin-bottom: 1.5rem;
+            font-weight: normal;
+        }
+
+        .protocol-section p {
+            font-size: 0.9rem;
+            line-height: 1.8;
+            color: #8c8675;
+            margin-bottom: 2.5rem;
+        }
+
+        .protocol-btn {
+            display: inline-block;
+            padding: 1rem 2.5rem;
+            background: transparent;
+            color: #d1cbb8;
+            border: 1px solid #d1cbb8;
+            text-decoration: none;
+            font-size: 0.8rem;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            transition: all 0.4s ease;
+        }
+
+        .protocol-btn:hover {
+            background: #d1cbb8;
+            color: #0a0a09;
+        }
+
+        /* FOOTER */
+        .footer { margin-top: 6rem; padding-bottom: 4rem; text-align: center; border-top: 1px solid rgba(209, 203, 184, 0.1); padding-top: 4rem; }
+        .mail-sigillo { display: inline-block; color: #d1cbb8; text-decoration: none; font-size: 0.85rem; letter-spacing: 2px; transition: opacity 0.4s ease; }
+        .mail-sigillo:hover { opacity: 0.4; }
+
+        /* MOBILE RESPONSIVE */
+        @media (max-width: 768px) {
+            .navbar { flex-direction: column; padding: 1.5rem 1rem; gap: 1.5rem; }
+            .nav-links { display: flex; gap: 1.5rem; justify-content: center; width: 100%; }
+            .nav-links a { margin-left: 0; font-size: 0.75rem; }
+            .room-header { padding-top: 10rem; }
+            .repertorio-item { grid-template-columns: 1fr; gap: 1.5rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <header class="navbar">
+        <a href="index.html" class="nav-brand">TRINUK</a>
+        <nav class="nav-links">
+            <a href="index.html">Il Manifesto</a>
+            <a href="narrative.html" class="active">Narrative</a>
+            <a href="corporate.html">Corporate</a>
+        </nav>
+    </header>
+
+    <section class="room-header">
+        <h1>I Frammenti</h1>
+        <p>Non cataloghiamo oggetti commerciali. Raccogliamo i resti di un dialogo tra la materia grezza e il Cortex Quantistico. Ogni frammento è un'opera incompleta che attende il tuo innesco per esistere.</p>
+    </section>
+
+    <main class="archive-container">
+
+        <article class="repertorio-item">
+            <div class="repertorio-meta">
+                <h3>Reperto 01 // Yue Lao</h3>
+                <span class="repertorio-status">Status: Atto Iniziale</span>
+            </div>
+            <div class="repertorio-body">
+                <p>L'archetipo del legame primordiale. Non celebra l'amore ideale, ma la forza brutale di ricucire le crepe e abitare le distanze imperfette. Richiede l'intervento manuale per chiudere il patto nello spazio fisico.</p>
+                <div class="materia-specs">
+                    MATERIA: Totem SLS, Cotone grezzo, Ceralacca scarlatta.<br>
+                    INNESCO: Patto di Pietra e Filo.<br>
+                    BIO-FEEDBACK: Attivo.
+                </div>
+            </div>
+        </article>
+
+        <article class="repertorio-item">
+            <div class="repertorio-meta">
+                <h3>Reperto 02 // La Soglia del Silenzio</h3>
+                <span class="repertorio-status">Status: In Attesa di Innesco</span>
+            </div>
+            <div class="repertorio-body">
+                <p>Custodisce l'entropia geologica. Un blocco massiccio pensato per chi vive nel rumore e necessita di un punto d'ancoraggio gravitazionale assoluto nello studio o nell'abitare.</p>
+                <div class="materia-specs">
+                    MATERIA: Basalto nero vulcanico, resina epossidica opaca.<br>
+                    INNESCO: Rilascio biometrico NFC.<br>
+                    BIO-FEEDBACK: In attesa di calibrazione.
+                </div>
+            </div>
+        </article>
+
+        <article class="repertorio-item">
+            <div class="repertorio-meta">
+                <h3>Reperto 03 // Il Monolite Sintropico</h3>
+                <span class="repertorio-status">Status: Architettura Globale</span>
+            </div>
+            <div class="repertorio-body">
+                <p>La densità estrema del pensiero ridotta a forma. La fessura geometrica centrale riceve la luce e si connette al server neurale indipendente di Anima Story Studio.</p>
+                <div class="materia-specs">
+                    MATERIA: Cemento architettonico vibrato, grafite pura.<br>
+                    INNESCO: Connessione Cortex Quantistico.<br>
+                    BIO-FEEDBACK: Sincronizzato.
+                </div>
+            </div>
+        </article>
+
+    </main>
+
+    <section class="protocol-section">
+        <h2>Richiesta d'Assegnazione</h2>
+        <p>I Trinuk non si acquistano tramite transazioni automatizzate. Ciascun artefatto viene assegnato attraverso una valutazione di affinità archetipica con lo studio.</p>
+        <a href="mailto:giulio@animastory.studio?subject=Richiesta%20Assegnazione%20Reperto%20Trinuk" class="protocol-btn">Apri il Protocollo di Contatto</a>
+    </section>
+
+    <footer class="footer">
+        <a href="mailto:giulio@animastory.studio" class="mail-sigillo">giulio@animastory.studio</a>
+    </footer>
+
+</body>
+</html>
