@@ -1,0 +1,95 @@
+/* --- ESTETICA GLOBALE TRINUK --- */
+body {
+    background-color: #080808;
+    color: #e0e0e0;
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+/* Navbar Unificata */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 40px;
+    border-bottom: 1px solid #1a1a1a;
+    background-color: #080808;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.nav-brand {
+    font-weight: bold;
+    letter-spacing: 2px;
+    color: #fff;
+    text-decoration: none;
+    font-size: 1.1rem;
+}
+
+.nav-links a {
+    color: #777;
+    text-decoration: none;
+    margin-left: 30px;
+    font-size: 0.9rem;
+    letter-spacing: 1px;
+    transition: color 0.3s ease;
+}
+
+.nav-links a:hover, .nav-links a.active {
+    color: #fff;
+}
+
+/* Sezioni Contenuto / Manifesto / Rito */
+.manifesto, .manifesto-page {
+    max-width: 800px;
+    margin: 80px auto;
+    padding: 0 20px;
+}
+
+.blocco-testo {
+    margin-bottom: 60px;
+}
+
+.blocco-testo h2 {
+    font-size: 1.8rem;
+    color: #fff;
+    margin-bottom: 20px;
+    letter-spacing: 1px;
+    border-left: 2px solid #fff;
+    padding-left: 15px;
+}
+
+.blocco-testo p {
+    font-size: 1.1rem;
+    line-height: 1.7;
+    color: #a0a0a0;
+    margin-bottom: 20px;
+}
+
+/* Lista Atti (per la pagina del Rito) */
+.ritual-list {
+    margin-top: 30px;
+    border-left: 1px solid #1a1a1a;
+    padding-left: 20px;
+}
+
+.atto {
+    margin-bottom: 35px;
+}
+
+.atto-titolo {
+    display: block;
+    font-weight: bold;
+    color: #fff;
+    margin-bottom: 8px;
+    letter-spacing: 0.5px;
+    font-size: 1.05rem;
+}
+
+.atto-testo {
+    color: #888;
+    font-size: 0.95rem;
+    line-height: 1.6;
+}

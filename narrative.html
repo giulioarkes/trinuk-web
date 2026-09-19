@@ -4,26 +4,23 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Narrative // Trinuk — Anima Story Studio</title>
+    
+    <!-- 1. CARICA IL CSS GLOBALE (per font e colori base) -->
+    <link rel="stylesheet" href="style.css">
+    
+    <!-- 2. STILI UNICI E IMMERSIVI SOLO PER QUESTA PAGINA -->
     <style>
-        /* FONDAMENTA CTONIE */
+        /* Blocca lo scroll per l'effetto immersivo */
         html, body { 
+            overflow: hidden; 
             margin: 0; 
             padding: 0; 
             width: 100%;
             height: 100%;
             background-color: #050504; 
-            color: #d1cbb8; 
-            font-family: "Georgia", serif; 
-            overflow: hidden; 
-        }
-        
-        @keyframes respiroMinerale {
-            0% { color: #d1cbb8; text-shadow: 0 0 10px rgba(209, 203, 184, 0.1); }
-            50% { color: #fffaf0; text-shadow: 0 0 25px rgba(255, 140, 0, 0.4), 0 0 50px rgba(255, 69, 0, 0.2); }
-            100% { color: #d1cbb8; text-shadow: 0 0 10px rgba(209, 203, 184, 0.1); }
         }
 
-        /* HEADER NAVIGAZIONE */
+        /* OVERRIDE HEADER: In questa pagina la navbar deve fluttuare trasparente */
         .navbar { 
             position: absolute; 
             top: 0; 
@@ -31,17 +28,21 @@
             width: 100%; 
             padding: 1.5rem 2rem; 
             box-sizing: border-box; 
-            display: flex; 
-            justify-content: space-between; 
-            align-items: center; 
+            background: transparent; /* Sovrascrive il nero globale */
+            border-bottom: none;     /* Sovrascrive il bordo globale */
             z-index: 100; 
-            mix-blend-mode: difference;
-            pointer-events: none; /* Lascia passare i click al portale sottostante, tranne che sui link */
+            mix-blend-mode: difference; /* Fa contrasto con la foto sotto */
+            pointer-events: none; 
         }
-        .nav-brand { font-size: 1rem; letter-spacing: 3px; text-decoration: none; text-transform: uppercase; animation: respiroMinerale 5s infinite alternate ease-in-out; pointer-events: auto;}
-        .nav-links { pointer-events: auto; }
-        .nav-links a { color: #7a766a; text-decoration: none; font-size: 0.75rem; letter-spacing: 2px; margin-left: 2rem; text-transform: uppercase; }
-        .nav-links a:hover, .nav-links a.active { color: #d1cbb8; }
+        .nav-brand, .nav-links { pointer-events: auto; }
+        
+        /* Animazione del logo (esclusiva per l'HUD) */
+        @keyframes respiroMinerale {
+            0% { color: #d1cbb8; text-shadow: 0 0 10px rgba(209, 203, 184, 0.1); }
+            50% { color: #fffaf0; text-shadow: 0 0 25px rgba(255, 140, 0, 0.4), 0 0 50px rgba(255, 69, 0, 0.2); }
+            100% { color: #d1cbb8; text-shadow: 0 0 10px rgba(209, 203, 184, 0.1); }
+        }
+        .nav-brand { animation: respiroMinerale 5s infinite alternate ease-in-out; }
 
         /* SELETTORI DELLA FREQUENZA VISIVA (HUD) */
         .hud-selectors {
@@ -74,9 +75,7 @@
             transform: translateX(10px);
         }
 
-        .hud-btn:hover {
-            color: #a8a292;
-        }
+        .hud-btn:hover { color: #a8a292; }
 
         /* PORTALE FULLSCREEN */
         .portal-container {
@@ -106,13 +105,9 @@
             object-position: center;
             filter: grayscale(100%) contrast(1.4) brightness(0.35);
             transition: opacity 1s cubic-bezier(0.16, 1, 0.3, 1), filter 1s ease, transform 1s ease;
-            opacity: 0; /* Nascoste di default */
+            opacity: 0; 
         }
-
-        /* Mostra l'immagine attiva in base al selettore */
-        .portal-bg.visible {
-            opacity: 1;
-        }
+        .portal-bg.visible { opacity: 1; }
 
         /* REAZIONE ALLA PRESSIONE (SVELAMENTO) */
         .portal-container.is-pressed .portal-bg {
@@ -136,9 +131,7 @@
             width: 90%;
             transition: opacity 0.4s ease;
         }
-        .portal-container.is-pressed .portal-hint {
-            opacity: 0;
-        }
+        .portal-container.is-pressed .portal-hint { opacity: 0; }
 
         /* MANIFESTO CENTRALE (TESTO NASCOSTO) */
         .portal-manifesto {
@@ -207,11 +200,12 @@
 </head>
 <body>
 
-    <!-- NAVBAR -->
+    <!-- HEADER NAVIGAZIONE UNIFICATO -->
     <header class="navbar">
         <a href="index.html" class="nav-brand">TRINUK</a>
         <nav class="nav-links">
-            <a href="index.html">Il Manifesto</a>
+            <a href="manifesto.html">Il Manifesto</a>
+            <a href="rito.html">Il Rito</a>
             <a href="narrative.html" class="active">Narrative</a>
             <a href="corporate.html">Corporate</a>
         </nav>
@@ -257,7 +251,7 @@
         const imgRito = document.getElementById('img-rito');
 
         btnMateria.addEventListener('click', (e) => {
-            e.stopPropagation(); // Evita di innescare la lettura del testo
+            e.stopPropagation(); 
             btnMateria.classList.add('active');
             btnRito.classList.remove('active');
             imgMateria.classList.add('visible');
@@ -273,14 +267,11 @@
         });
 
         // Logica di Rivelazione (Pressione sul Portale)
-        // Desktop
         portal.addEventListener('mousedown', () => portal.classList.add('is-pressed'));
         portal.addEventListener('mouseup', () => portal.classList.remove('is-pressed'));
         portal.addEventListener('mouseleave', () => portal.classList.remove('is-pressed'));
 
-        // Mobile
         portal.addEventListener('touchstart', (e) => {
-            // Ignora i touch se avvengono sui bottoni laterali
             if (e.target.classList.contains('hud-btn')) return;
             portal.classList.add('is-pressed');
         }, { passive: true });
@@ -289,7 +280,6 @@
             portal.classList.remove('is-pressed');
         });
         
-        // Previene il menu contestuale su mobile durante il long-press
         portal.addEventListener('contextmenu', e => e.preventDefault());
     </script>
 
