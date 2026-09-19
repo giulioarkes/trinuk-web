@@ -2,7 +2,7 @@
 <html lang="it">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Narrative // Trinuk — Anima Story Studio</title>
     <style>
         /* FONDAMENTA CTONIE */
@@ -10,52 +10,92 @@
             margin: 0; 
             padding: 0; 
             width: 100%;
-            height: 100vh;
+            height: 100%;
             background-color: #050504; 
             color: #d1cbb8; 
             font-family: "Georgia", serif; 
-            overflow: hidden; /* Niente scroll, solo l'opera */
+            overflow: hidden; 
         }
         
-        /* RESPIRO DI FUOCO SUL BRAND */
         @keyframes respiroMinerale {
             0% { color: #d1cbb8; text-shadow: 0 0 10px rgba(209, 203, 184, 0.1); }
             50% { color: #fffaf0; text-shadow: 0 0 25px rgba(255, 140, 0, 0.4), 0 0 50px rgba(255, 69, 0, 0.2); }
             100% { color: #d1cbb8; text-shadow: 0 0 10px rgba(209, 203, 184, 0.1); }
         }
 
+        /* HEADER NAVIGAZIONE */
         .navbar { 
             position: absolute; 
             top: 0; 
             left: 0; 
             width: 100%; 
-            padding: 2rem 3rem; 
+            padding: 1.5rem 2rem; 
             box-sizing: border-box; 
             display: flex; 
             justify-content: space-between; 
             align-items: center; 
             z-index: 100; 
             mix-blend-mode: difference;
+            pointer-events: none; /* Lascia passare i click al portale sottostante, tranne che sui link */
         }
-        .nav-brand { font-size: 1.1rem; letter-spacing: 4px; text-decoration: none; text-transform: uppercase; animation: respiroMinerale 5s infinite alternate ease-in-out; }
-        .nav-links a { color: #7a766a; text-decoration: none; font-size: 0.8rem; letter-spacing: 2px; margin-left: 2.5rem; text-transform: uppercase; transition: color 0.4s ease; }
+        .nav-brand { font-size: 1rem; letter-spacing: 3px; text-decoration: none; text-transform: uppercase; animation: respiroMinerale 5s infinite alternate ease-in-out; pointer-events: auto;}
+        .nav-links { pointer-events: auto; }
+        .nav-links a { color: #7a766a; text-decoration: none; font-size: 0.75rem; letter-spacing: 2px; margin-left: 2rem; text-transform: uppercase; }
         .nav-links a:hover, .nav-links a.active { color: #d1cbb8; }
 
-        /* PORTALE FULLSCREEN DELL'OPERA */
+        /* SELETTORI DELLA FREQUENZA VISIVA (HUD) */
+        .hud-selectors {
+            position: absolute;
+            top: 5rem;
+            left: 2rem;
+            z-index: 90;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            pointer-events: auto;
+        }
+        
+        .hud-btn {
+            background: none;
+            border: none;
+            color: #555249;
+            font-family: "Georgia", serif;
+            font-size: 0.75rem;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            text-align: left;
+            cursor: pointer;
+            padding: 0;
+            transition: color 0.4s ease, transform 0.4s ease;
+        }
+
+        .hud-btn.active {
+            color: #d1cbb8;
+            transform: translateX(10px);
+        }
+
+        .hud-btn:hover {
+            color: #a8a292;
+        }
+
+        /* PORTALE FULLSCREEN */
         .portal-container {
-            position: relative;
+            position: absolute;
+            top: 0;
+            left: 0;
             width: 100vw;
             height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
             overflow: hidden;
-            cursor: pointer;
+            cursor: crosshair;
             -webkit-user-select: none;
             user-select: none;
+            z-index: 10;
         }
 
-        /* L'IMMAGINE A TUTTO SCHERMO */
+        /* LIVELLI DELLE IMMAGINI (DISSOLVENZA) */
         .portal-bg {
             position: absolute;
             top: 0;
@@ -63,103 +103,111 @@
             width: 100%;
             height: 100%;
             object-fit: cover;
-            /* Di default: fredda, desaturata, oscura (fuori fuoco esistenziale) */
+            object-position: center;
             filter: grayscale(100%) contrast(1.4) brightness(0.35);
-            transition: filter 1.2s cubic-bezier(0.16, 1, 0.3, 1), transform 1.2s cubic-bezier(0.16, 1, 0.3, 1);
-            transform: scale(1);
+            transition: opacity 1s cubic-bezier(0.16, 1, 0.3, 1), filter 1s ease, transform 1s ease;
+            opacity: 0; /* Nascoste di default */
         }
 
-        /* IL LAYER DI RIVELAZIONE (QUANDO PREMI) */
-        .portal-container.active .portal-bg {
+        /* Mostra l'immagine attiva in base al selettore */
+        .portal-bg.visible {
+            opacity: 1;
+        }
+
+        /* REAZIONE ALLA PRESSIONE (SVELAMENTO) */
+        .portal-container.is-pressed .portal-bg {
             filter: grayscale(0%) contrast(1.1) brightness(0.7);
-            transform: scale(1.02); /* Leggero zoom viva la materia */
+            transform: scale(1.03);
         }
 
-        /* ISTRUZIONE INIZIALE DI SINTONIZZAZIONE */
+        /* GUIDA AL TOCCO */
         .portal-hint {
             position: absolute;
-            bottom: 3rem;
+            bottom: 4rem; 
             left: 50%;
             transform: translateX(-50%);
-            font-size: 0.75rem;
-            letter-spacing: 4px;
+            font-size: 0.7rem;
+            letter-spacing: 3px;
             color: #7a766a;
             text-transform: uppercase;
             z-index: 50;
             pointer-events: none;
-            transition: opacity 0.5s ease;
+            text-align: center;
+            width: 90%;
+            transition: opacity 0.4s ease;
         }
-        .portal-container.active .portal-hint {
+        .portal-container.is-pressed .portal-hint {
             opacity: 0;
         }
 
-        /* IL TESTO CHE EMERGE DALL'OMBRA (NASCOSTO DI DEFAULT) */
+        /* MANIFESTO CENTRALE (TESTO NASCOSTO) */
         .portal-manifesto {
             position: relative;
-            z-index: 10;
-            max-width: 600px;
-            padding: 3rem;
+            z-index: 80;
+            width: 85%;
+            max-width: 550px;
+            padding: 2.5rem;
+            box-sizing: border-box;
             text-align: center;
             background: rgba(5, 5, 4, 0.85);
-            border: 1px solid rgba(209, 203, 184, 0.1);
-            backdrop-filter: blur(10px);
+            border: 1px solid rgba(209, 203, 184, 0.15);
+            backdrop-filter: blur(12px);
             opacity: 0;
             transform: translateY(15px);
-            transition: opacity 0.8s ease, transform 0.8s ease;
+            transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1), transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
             pointer-events: none;
         }
 
-        /* QUANDO L'UTENTE TIENE PREMUTO, IL TESTO SI MATERIALIZZA */
-        .portal-container.active .portal-manifesto {
+        .portal-container.is-pressed .portal-manifesto {
             opacity: 1;
             transform: translateY(0);
         }
 
         .portal-manifesto h2 {
-            font-size: 1.2rem;
-            letter-spacing: 4px;
+            font-size: 1.1rem;
+            letter-spacing: 3px;
             text-transform: uppercase;
             color: #d1cbb8;
             margin-top: 0;
-            margin-bottom: 1rem;
+            margin-bottom: 0.8rem;
             font-weight: normal;
         }
 
         .portal-manifesto .status {
-            font-size: 0.7rem;
-            letter-spacing: 3px;
+            font-size: 0.65rem;
+            letter-spacing: 2px;
             color: #7a766a;
             text-transform: uppercase;
             display: block;
-            margin-bottom: 1.5rem;
+            margin-bottom: 1.2rem;
         }
 
         .portal-manifesto p {
-            font-size: 0.9rem;
-            line-height: 1.9;
+            font-size: 0.85rem;
+            line-height: 1.8;
             color: #a8a292;
-            margin-bottom: 2rem;
+            margin-bottom: 1.5rem;
         }
 
         .materia-specs {
-            font-size: 0.75rem;
-            letter-spacing: 1.5px;
+            font-size: 0.7rem;
+            letter-spacing: 1px;
             color: #615d52;
             border-top: 1px solid rgba(209, 203, 184, 0.1);
-            padding-top: 1rem;
+            padding-top: 0.8rem;
         }
 
-        /* MOBILE OPTIMIZATION */
+        /* MOBILE OVERRIDES */
         @media (max-width: 768px) {
-            .navbar { padding: 1.5rem 1.5rem; }
-            .nav-links { display: none; } /* Su mobile puro isolamento visivo */
-            .portal-manifesto { width: 85%; padding: 2rem; }
+            .nav-links { display: none; }
+            .hud-selectors { top: 4.5rem; left: 1.5rem; }
+            .portal-manifesto { padding: 1.8rem; width: 90%; }
         }
     </style>
 </head>
 <body>
 
-    <!-- NAVBAR MINIMALE -->
+    <!-- NAVBAR -->
     <header class="navbar">
         <a href="index.html" class="nav-brand">TRINUK</a>
         <nav class="nav-links">
@@ -169,15 +217,25 @@
         </nav>
     </header>
 
-    <!-- PORTALE IMMERSIVO (REPERTO 01) -->
+    <!-- SELETTORI DELLA FREQUENZA VISIVA -->
+    <div class="hud-selectors">
+        <button class="hud-btn active" id="btn-materia">[ LA MATERIA ]</button>
+        <button class="hud-btn" id="btn-rito">[ IL RITO ]</button>
+    </div>
+
+    <!-- PORTALE IMMERSIVO -->
     <div class="portal-container" id="portal">
-        <!-- IMMAGINE A TUTTO SCHERMO -->
-        <img src="yuelao-macro.png" class="portal-bg" alt="Reperto 01 - Yue Lao">
+        
+        <!-- IMMAGINE A: LA MATERIA (Macro brutale) -->
+        <img src="yuelao-macro.png" class="portal-bg visible" id="img-materia" alt="Yue Lao - La Materia">
+        
+        <!-- IMMAGINE B: IL RITO (Moon Box, Lagurus, Framenuk) -->
+        <img src="yuelao-rito.png" class="portal-bg" id="img-rito" alt="Yue Lao - Il Rito">
+        
+        <!-- ISTRUZIONE DI INNESCO -->
+        <div class="portal-hint">[ Tieni premuto sullo schermo per l'innesco ]</div>
 
-        <!-- GUIDA AL TOCCO -->
-        <div class="portal-hint">[ Tieni premuto o clicca per sintonizzare l'opera ]</div>
-
-        <!-- BLOCCO TESTUALE CHE EMERGE DAL BUIO -->
+        <!-- IL MANIFESTO CHE EMERGE -->
         <div class="portal-manifesto">
             <h2>Reperto 01 // Yue Lao</h2>
             <span class="status">Status: Atto Iniziale // Bio-Feedback Attivo</span>
@@ -191,18 +249,48 @@
 
     <script>
         const portal = document.getElementById('portal');
+        
+        // Logica dei Selettori
+        const btnMateria = document.getElementById('btn-materia');
+        const btnRito = document.getElementById('btn-rito');
+        const imgMateria = document.getElementById('img-materia');
+        const imgRito = document.getElementById('img-rito');
 
-        // Eventi per desktop (Mouse down / up)
-        portal.addEventListener('mousedown', () => portal.classList.add('active'));
-        portal.addEventListener('mouseup', () => portal.classList.remove('active'));
-        portal.addEventListener('mouseleave', () => portal.classList.remove('active'));
-
-        // Eventi per mobile (Touch start / end sul display)
-        portal.addEventListener('touchstart', (e) => {
-            e.preventDefault(); // Evita comportamenti di default del browser mobile
-            portal.classList.add('active');
+        btnMateria.addEventListener('click', (e) => {
+            e.stopPropagation(); // Evita di innescare la lettura del testo
+            btnMateria.classList.add('active');
+            btnRito.classList.remove('active');
+            imgMateria.classList.add('visible');
+            imgRito.classList.remove('visible');
         });
-        portal.addEventListener('touchend', () => portal.classList.remove('active'));
+
+        btnRito.addEventListener('click', (e) => {
+            e.stopPropagation();
+            btnRito.classList.add('active');
+            btnMateria.classList.remove('active');
+            imgRito.classList.add('visible');
+            imgMateria.classList.remove('visible');
+        });
+
+        // Logica di Rivelazione (Pressione sul Portale)
+        // Desktop
+        portal.addEventListener('mousedown', () => portal.classList.add('is-pressed'));
+        portal.addEventListener('mouseup', () => portal.classList.remove('is-pressed'));
+        portal.addEventListener('mouseleave', () => portal.classList.remove('is-pressed'));
+
+        // Mobile
+        portal.addEventListener('touchstart', (e) => {
+            // Ignora i touch se avvengono sui bottoni laterali
+            if (e.target.classList.contains('hud-btn')) return;
+            portal.classList.add('is-pressed');
+        }, { passive: true });
+        
+        portal.addEventListener('touchend', () => {
+            portal.classList.remove('is-pressed');
+        });
+        
+        // Previene il menu contestuale su mobile durante il long-press
+        portal.addEventListener('contextmenu', e => e.preventDefault());
     </script>
 
 </body>
