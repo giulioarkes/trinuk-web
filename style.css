@@ -1,95 +1,114 @@
-/* --- ESTETICA GLOBALE TRINUK --- */
-body {
-    background-color: #080808;
-    color: #d1cbb8;
-    font-family: "Georgia", serif;
-    margin: 0;
-    padding: 0;
+/* --- ESTETICA GLOBALE TRINUK (FONDAMENTA CTONIE) --- */
+
+/* Animazione Respiro (usata nel logo) */
+@keyframes respiroMinerale {
+    0% { color: #d1cbb8; text-shadow: 0 0 10px rgba(209, 203, 184, 0.1); }
+    50% { color: #fffaf0; text-shadow: 0 0 25px rgba(255, 140, 0, 0.4), 0 0 50px rgba(255, 69, 0, 0.2); }
+    100% { color: #d1cbb8; text-shadow: 0 0 10px rgba(209, 203, 184, 0.1); }
 }
 
-/* Navbar Unificata */
+body {
+    background-color: #050504; /* Nero abissale */
+    color: #d1cbb8; /* Tinta ossea / minerale */
+    font-family: "Georgia", serif; /* Il font solenne di Trinuk */
+    margin: 0;
+    padding: 0;
+    -webkit-font-smoothing: antialiased;
+}
+
+/* --- HEADER NAVBAR UNIFICATA --- */
 .navbar {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 20px 40px;
-    border-bottom: 1px solid #1a1a1a;
-    background-color: #080808;
+    padding: 1.5rem 2rem;
+    background-color: #050504;
+    border-bottom: 1px solid rgba(209, 203, 184, 0.08); /* Linea di divisione impercettibile */
     position: sticky;
     top: 0;
     z-index: 1000;
 }
 
 .nav-brand {
-    font-weight: bold;
-    letter-spacing: 2px;
-    color: #fff;
+    font-size: 1rem;
+    letter-spacing: 3px;
     text-decoration: none;
-    font-size: 1.1rem;
+    text-transform: uppercase;
+    color: #d1cbb8;
+    animation: respiroMinerale 5s infinite alternate ease-in-out;
 }
 
 .nav-links a {
-    color: #777;
+    color: #7a766a; /* Grigio spento per i link inattivi */
     text-decoration: none;
-    margin-left: 30px;
-    font-size: 0.9rem;
-    letter-spacing: 1px;
-    transition: color 0.3s ease;
+    font-size: 0.75rem;
+    letter-spacing: 2px;
+    margin-left: 2rem;
+    text-transform: uppercase;
+    transition: color 0.4s ease;
 }
 
 .nav-links a:hover, .nav-links a.active {
-    color: #fff;
+    color: #d1cbb8; /* Si accendono di colore minerale al passaggio */
 }
 
-/* Sezioni Contenuto / Manifesto / Rito */
+/* --- SEZIONI DI TESTO (IL RITO / IL MANIFESTO) --- */
 .manifesto, .manifesto-page {
-    max-width: 800px;
-    margin: 80px auto;
-    padding: 0 20px;
+    max-width: 750px;
+    margin: 100px auto;
+    padding: 0 2rem;
 }
 
 .blocco-testo {
-    margin-bottom: 60px;
+    margin-bottom: 80px;
 }
 
 .blocco-testo h2 {
-    font-size: 1.8rem;
+    font-size: 1.2rem;
     color: #d1cbb8;
-    margin-bottom: 20px;
-    letter-spacing: 1px;
-    border-left: 2px solid #d1cbb8;
-    padding-left: 15px;
+    margin-bottom: 30px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    font-weight: normal;
+    border-bottom: 1px solid rgba(209, 203, 184, 0.15);
+    padding-bottom: 15px;
 }
 
 .blocco-testo p {
-    font-size: 1.1rem;
-    line-height: 1.7;
-    color: #a0a0a0;
-    margin-bottom: 20px;
+    font-size: 1.05rem;
+    line-height: 1.9;
+    color: #a8a292;
+    margin-bottom: 25px;
 }
 
-/* Lista Atti (per la pagina del Rito) */
+/* --- LISTA DEGLI ATTI (IL RITO) --- */
 .ritual-list {
-    margin-top: 30px;
-    border-left: 1px solid #1a1a1a;
-    padding-left: 20px;
+    margin-top: 50px;
 }
 
 .atto {
-    margin-bottom: 35px;
+    margin-bottom: 45px;
+    padding-left: 25px;
+    border-left: 1px solid rgba(209, 203, 184, 0.15); /* Faglia laterale */
 }
 
 .atto-titolo {
     display: block;
-    font-weight: bold;
     color: #d1cbb8;
-    margin-bottom: 8px;
-    letter-spacing: 0.5px;
-    font-size: 1.05rem;
+    margin-bottom: 12px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    font-size: 0.8rem;
 }
 
 .atto-testo {
-    color: #a0a0a0;
+    color: #7a766a;
     font-size: 0.95rem;
-    line-height: 1.6;
+    line-height: 1.7;
+}
+
+/* --- MOBILE RESPONSIVE --- */
+@media (max-width: 768px) {
+    .nav-links { display: none; }
+    .manifesto, .manifesto-page { margin: 60px auto; }
 }
