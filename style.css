@@ -1,8 +1,8 @@
 /* --- ESTETICA GLOBALE TRINUK --- */
 body {
     background-color: #080808;
-    color: #e0e0e0;
-    font-family: 'Helvetica Neue', Arial, sans-serif;
+    color: #d1cbb8;
+    font-family: "Georgia", serif;
     margin: 0;
     padding: 0;
 }
@@ -54,10 +54,10 @@ body {
 
 .blocco-testo h2 {
     font-size: 1.8rem;
-    color: #fff;
+    color: #d1cbb8;
     margin-bottom: 20px;
     letter-spacing: 1px;
-    border-left: 2px solid #fff;
+    border-left: 2px solid #d1cbb8;
     padding-left: 15px;
 }
 
@@ -82,14 +82,14 @@ body {
 .atto-titolo {
     display: block;
     font-weight: bold;
-    color: #fff;
+    color: #d1cbb8;
     margin-bottom: 8px;
     letter-spacing: 0.5px;
     font-size: 1.05rem;
 }
 
 .atto-testo {
-    color: #888;
+    color: #a0a0a0;
     font-size: 0.95rem;
     line-height: 1.6;
 }
