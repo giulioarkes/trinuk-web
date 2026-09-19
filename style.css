@@ -65,7 +65,7 @@ body {
 
 .blocco-testo h2 {
     font-size: 1.2rem;
-    color: #d1cbb8;
+    color: #e3decc; /* Reso ancora più osseo e luminoso per staccare dal testo */
     margin-bottom: 30px;
     letter-spacing: 3px;
     text-transform: uppercase;
@@ -77,7 +77,7 @@ body {
 .blocco-testo p {
     font-size: 1.05rem;
     line-height: 1.9;
-    color: #a8a292;
+    color: #837f73; /* Grigio cenere/minerale spento. Crea profondità. */
     margin-bottom: 25px;
 }
 
@@ -94,7 +94,7 @@ body {
 
 .atto-titolo {
     display: block;
-    color: #d1cbb8;
+    color: #e3decc; /* Stessa luminosità del titolo h2 */
     margin-bottom: 12px;
     letter-spacing: 2px;
     text-transform: uppercase;
@@ -102,7 +102,7 @@ body {
 }
 
 .atto-testo {
-    color: #7a766a;
+    color: #837f73; /* Stessa cenere del paragrafo */
     font-size: 0.95rem;
     line-height: 1.7;
 }
