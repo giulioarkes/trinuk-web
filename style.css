@@ -107,8 +107,48 @@ body {
     line-height: 1.7;
 }
 
-/* --- MOBILE RESPONSIVE --- */
+/* --- MOBILE RESPONSIVE (LA FAGLIA) --- */
 @media (max-width: 768px) {
-    .nav-links { display: none; }
-    .manifesto, .manifesto-page { margin: 60px auto; }
+    /* Ristrutturazione dell'Header */
+    .navbar {
+        flex-direction: column; /* Impila il logo e i link verticalmente */
+        padding: 1.2rem 1rem;
+        background-color: #050504; /* Assicura che l'header copra i contenuti sottostanti */
+    }
+
+    .nav-brand {
+        margin-bottom: 18px; /* Crea respiro sotto il logo */
+        font-size: 1.1rem;
+    }
+
+    .nav-links {
+        display: flex;
+        flex-wrap: wrap; /* Permette ai link di andare a capo con dignità se serve */
+        justify-content: center; /* Li centra perfettamente */
+        gap: 15px 20px; /* Spaziatura chirurgica orizzontale e verticale */
+        width: 100%;
+    }
+
+    .nav-links a {
+        margin-left: 0; /* Resetta i margini larghi del desktop */
+        font-size: 0.7rem;
+        white-space: nowrap; /* IMPEDISCE che "IL MANIFESTO" si spezzi su due righe */
+    }
+
+    /* Aggiustamento pesi per il Manifesto e il Rito su schermi piccoli */
+    .manifesto, .manifesto-page {
+        margin: 40px auto;
+        padding: 0 1.5rem;
+    }
+
+    .blocco-testo h2 {
+        font-size: 1.05rem;
+        letter-spacing: 2px;
+        margin-bottom: 20px;
+    }
+
+    .blocco-testo p {
+        font-size: 0.95rem;
+        line-height: 1.7;
+    }
 }
